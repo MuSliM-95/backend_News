@@ -12,4 +12,4 @@ router.patch('/news/:id', upload.single('image'), authorizationMidolvar, newsCon
 router.delete('/news/:id',  newsController.deleteController)
 
 
-module.exports = router  
+module.exports = router   

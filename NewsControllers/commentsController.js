@@ -1,4 +1,5 @@
 const Comment = require("../NewsModels/CommentsModel");
+const News = require("../NewsModels/NewsModel");
 
 module.exports.commentController = {
   getComments: async (req, res) => {
@@ -17,6 +18,9 @@ module.exports.commentController = {
         newsId,
         text,
         user_id,
+        time: new Date(),
+        date: new Date().toLocaleDateString(),
+        hour: new Date().toLocaleTimeString()
       });
       res.json(comment);
     } catch (error) {

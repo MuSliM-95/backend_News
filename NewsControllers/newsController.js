@@ -2,6 +2,7 @@ const News = require("../NewsModels/NewsModel");
 
 
 module.exports.newsController = {
+  
   postContoller: async (req, res) => {
     const { name, text, categories_id, } = req.body;
       const { filename } = req.file
@@ -12,12 +13,13 @@ module.exports.newsController = {
         name,
         text,
         categories_id,
+        commentsId: [] 
 
-      });
+      }); 
       return res.json(data);
-    
+     
     } catch (error) {
-      res.json(error.message);
+      res.json(error.message);   
     }
   },
 
@@ -31,7 +33,7 @@ module.exports.newsController = {
   },
   getControllerByid: async (req, res) => {
     try {
-      const data = await News.findById(req.params.id)
+      const data = await News.findById(req.params.id)   
       res.json(data);
     } catch (error) {
       res.json(error.message, "OH WHAT OH WENT WRONG");
@@ -42,7 +44,7 @@ module.exports.newsController = {
       const data = await News.find({ categories_id: req.params.id });
        res.json(data);
     } catch (error) {
-      rs.json("OH WHAT OH WENT WRONG");
+      rs.json("OH WHAT OH WENT WRONG"); 
     }
   }, 
 
@@ -64,7 +66,7 @@ module.exports.newsController = {
       const data = await News.findByIdAndRemove(req.params.id);
      res.json('Удалено')
     } catch (error) {
-      res.json(error.message);
+      res.json(error.message); 
     }
   },
 };

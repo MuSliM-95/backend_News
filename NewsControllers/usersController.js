@@ -6,24 +6,22 @@ require("dotenv").config();
 module.exports.userController = {
   userRegistrationController: async (req, res) => {
     try {
-      const { nickname, role, login, password } = req.body;
+      const { nickname, login, password, role } = req.body;
       const hash = await bcrypt.hash(
         password,
         Number(process.env.BCRYPT_ROUNDS)
       );
       const user = await User.create({
+        nickname,
         login: login,
         password: hash,
-        nickname,
-        role
+        role,
       });
-      res.json(user);
+      res.status(200).json(user);
     } catch (error) {
-      res.json({ error: error.message });
-    }
+      res.status(400).json({ error: error.message });
+    } 
   },
-
- 
 
   getController: async (req, res) => {
     try {
@@ -35,35 +33,43 @@ module.exports.userController = {
   },
 
   getUserIdController: async (req, res) => {
-try {
-    const user = await User.findById(req.params.id)  
-    res.json(user)
-} catch (error) {
-    res.json({ error: error.message });
-}
+    try {
+      const user = await User.findById(req.params.id);
+      res.json(user);
+    } catch (error) {
+      res.json({ error: error.message });
+    }
   },
 
-  patchController: async (req, res) =>{
-try {
-    const { nickname, role,  } = req.body;
-    const user = await User.findByIdAndUpdate(req.params.id, {
-        nickname,
-        role
-    }, {new: true})
-    res.json(user)
-} catch (error) {
-    res.json({ error: error.message });
-}
-},
+  patchController: async (req, res) => {
+    try {
+      const { nickname, name, surname, age, role } = req.body;
+      const { filename } = req.file
+      const user = await User.findByIdAndUpdate(
+        req.params.id,
+        {
+          image: filename,
+          imageSrc: req.file ? req.file.path : '',
+          nickname, 
+          name,
+          surname,
+          age,
+          role,
+        }, 
+        { new: true }
+      );
+      res.json(user);
+    } catch (error) {
+      res.json({ error: error.message });
+    }
+  },
 
-deleteController: async (req, res) => {
-try {
-    const user = await User.findByIdAndRemove(req.params.id)
-    res.json('Пользователь удален')
-} catch (error) {
-    
-}
-},
+  deleteController: async (req, res) => {
+    try {
+      const user = await User.findByIdAndRemove(req.params.id);
+      res.json("Пользователь удален");
+    } catch (error) {}
+  },
 
   login: async (req, res) => {
     const { login, password } = req.body;
@@ -91,5 +97,4 @@ try {
       user: payload.id,
     });
   },
-};   
- 
+};

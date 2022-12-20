@@ -8,4 +8,4 @@ router.get('/categories',  categoriesController.getCategories)
 router.patch('/categories/:id', authorizationMidolvar, categoriesController.patchCategories)
 router.delete('/categories/:id', authorizationMidolvar, categoriesController.deleteCategories)
 
-module.exports = router 
+module.exports = router  

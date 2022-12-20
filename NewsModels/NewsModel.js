@@ -18,6 +18,12 @@ categories_id:{
     type: mongoose.SchemaTypes.ObjectId,
     ref: "Category"
 },
+// commentsId: [
+// {
+//   type: mongoose.SchemaTypes.ObjectId,
+//   ref: "Comment"
+// }
+// ]
 
 
 
